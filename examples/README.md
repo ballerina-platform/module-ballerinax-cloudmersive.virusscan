@@ -2,13 +2,18 @@
 
 The `ballerinax/cloudmersive.virusscan` connector provides practical examples illustrating usage in various scenarios.
 
-[//]: # (TODO: Add examples)
-1. 
-2. 
+1. [Upload threat screening](./upload_threat_screening/upload_threat_screening.md) - Scans an uploaded file with the basic and advanced scans, reports threats, and checks the linked website.
+2. [Cloud blob batch scan](./cloud_blob_batch_scan/cloud_blob_batch_scan.md) - Starts an advanced Azure Blob scan as a batch job and polls its status until it completes.
 
 ## Prerequisites
 
-[//]: # (TODO: Add prerequisites)
+1. Get a Cloudmersive API key, as described in the [setup guide](https://github.com/ballerina-platform/module-ballerinax-cloudmersive.virusscan/blob/main/ballerina/README.md#setup-guide).
+
+2. For each example, create a `Config.toml` file with the related configuration. Here's an example of how your `Config.toml` file should look:
+
+    ```toml
+    apiKey = "<Cloudmersive API key>"
+    ```
 
 ## Running an example
 
