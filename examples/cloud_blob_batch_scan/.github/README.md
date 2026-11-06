@@ -1,0 +1,1 @@
+../cloud_blob_batch_scan.md

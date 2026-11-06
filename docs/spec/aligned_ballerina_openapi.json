@@ -1,0 +1,2571 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "virusapi",
+        "description": "The Cloudmersive Virus Scan API lets you scan files and content for viruses and identify security issues with content.",
+        "version": "v1"
+    },
+    "servers": [
+        {
+            "url": "https://api.cloudmersive.com/virus/scan"
+        }
+    ],
+    "paths": {
+        "/file": {
+            "post": {
+                "tags": [
+                    "Scan"
+                ],
+                "summary": "Scan a file for viruses",
+                "description": "Scan files and content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.",
+                "operationId": "scanFile",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScanFileRequest"
+                            }
+                        }
+                    },
+                    "required": true,
+                    "description": "File to scan for viruses, uploaded as multipart form data"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Virus scan result for the uploaded file, including whether it is clean and any viruses found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VirusScanResult"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VirusScanResult"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VirusScanResult"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VirusScanResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Apikey": []
+                    }
+                ]
+            }
+        },
+        "/file/advanced": {
+            "post": {
+                "tags": [
+                    "Scan"
+                ],
+                "summary": "Advanced Scan a file for viruses",
+                "description": "Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash, MSG, and a wide range of image file formats.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.",
+                "operationId": "scanFileAdvanced",
+                "parameters": [
+                    {
+                        "name": "fileName",
+                        "in": "header",
+                        "description": "Optional: specify the original file name of the file being scanned.  By default the file name is taken from inputFile parameter, but if this is not provided, or you wish to override it, you can specify the original file name using this parameter",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "allowExecutables",
+                        "in": "header",
+                        "description": "Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowInvalidFiles",
+                        "in": "header",
+                        "description": "Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowScripts",
+                        "in": "header",
+                        "description": "Set to false to block script files, such as a PHP files, Python scripts, BAT scripts, JS scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowPasswordProtectedFiles",
+                        "in": "header",
+                        "description": "Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowMacros",
+                        "in": "header",
+                        "description": "Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros (including support for .DOCX, .XLSX, .PPTX, .DOC and .XLS), and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowXmlExternalEntities",
+                        "in": "header",
+                        "description": "Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowInsecureDeserialization",
+                        "in": "header",
+                        "description": "Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowHtml",
+                        "in": "header",
+                        "description": "Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].  If set to true, HTML files containing script tags will be allowed, but ContainsScript will be set to true if script tags are present",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowUnsafeArchives",
+                        "in": "header",
+                        "description": "Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowOleEmbeddedObject",
+                        "in": "header",
+                        "description": "Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowUnwantedAction",
+                        "in": "header",
+                        "description": "Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "options",
+                        "in": "header",
+                        "description": "Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include permitJavascriptInHtml to allow JavaScript in HTML files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include blockInvalidUris to block invalid URIs in Office documents.  Include permitAuthenticodeSignedExecutables to allow executables if they have a valid Authenticode signature.  Include scanMultipartFile to scan multi-part files such as split zip files.  Include ignoreRestrictFileTypesForAttachments to ignore restrictFileTypes setting for file attachments.  Include permitJavascript, permitShellScript, permitPython, permitPhp, permitBatScript, permitVbScript, permitPowershellScript to allow specific script types.  Include permitElf, permitExe, permitDll, permitSys, permitAnyWindowsExecutable, permitMsi, permitMacho, permitJar, permitApk, permitClass, permitLnk to allow specific executable types.  Include permitMacroWithoutAutoExecute to allow macros that do not automatically execute.  Default is no options",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "restrictFileTypes",
+                        "in": "header",
+                        "description": "Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScanFileRequest"
+                            }
+                        }
+                    },
+                    "required": true,
+                    "description": "File to scan, uploaded as multipart form data; scan options are sent as headers"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Advanced scan result for the uploaded file, including threat rule findings and content information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VirusScanAdvancedResult"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VirusScanAdvancedResult"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VirusScanAdvancedResult"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VirusScanAdvancedResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Apikey": []
+                    }
+                ]
+            }
+        },
+        "/website": {
+            "post": {
+                "tags": [
+                    "Scan"
+                ],
+                "summary": "Scan a website for malicious content and threats",
+                "description": "Operation includes scanning the content of the URL for various types of malicious content and threats, including viruses and threats (including Phishing).",
+                "operationId": "scanWebsite",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WebsiteScanRequest"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WebsiteScanRequest"
+                            }
+                        },
+                        "application/xml": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WebsiteScanRequest"
+                            }
+                        },
+                        "text/xml": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WebsiteScanRequest"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WebsiteScanRequest"
+                            }
+                        }
+                    },
+                    "required": true,
+                    "description": "Website URL to scan for malicious content and threats"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Website scan result, including the threat type detected and the website's HTTP response code",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WebsiteScanResult"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WebsiteScanResult"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WebsiteScanResult"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WebsiteScanResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Apikey": []
+                    }
+                ],
+                "x-codegen-request-body-name": "input"
+            }
+        },
+        "/cloud-storage/azure-blob/single": {
+            "post": {
+                "tags": [
+                    "ScanCloudStorage"
+                ],
+                "summary": "Scan an Azure Blob for viruses",
+                "description": "Scan the contents of a single Azure Blob and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.",
+                "operationId": "scanAzureBlob",
+                "parameters": [
+                    {
+                        "name": "connectionString",
+                        "in": "header",
+                        "description": "Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "containerName",
+                        "in": "header",
+                        "description": "Name of the Blob container within the Azure Blob Storage account",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "blobPath",
+                        "in": "header",
+                        "description": "Path to the blob within the container, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Virus scan result for the Azure Blob, including whether it is clean and any viruses found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageVirusScanResult"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageVirusScanResult"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageVirusScanResult"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageVirusScanResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Apikey": []
+                    }
+                ]
+            }
+        },
+        "/cloud-storage/azure-blob/single/advanced": {
+            "post": {
+                "tags": [
+                    "ScanCloudStorage"
+                ],
+                "summary": "Advanced Scan an Azure Blob for viruses",
+                "description": "Advanced Scan the contents of a single Azure Blob and its content for viruses and threats.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.",
+                "operationId": "scanAzureBlobAdvanced",
+                "parameters": [
+                    {
+                        "name": "connectionString",
+                        "in": "header",
+                        "description": "Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "containerName",
+                        "in": "header",
+                        "description": "Name of the Blob container within the Azure Blob Storage account",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "blobPath",
+                        "in": "header",
+                        "description": "Path to the blob within the container, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "allowExecutables",
+                        "in": "header",
+                        "description": "Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowInvalidFiles",
+                        "in": "header",
+                        "description": "Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowScripts",
+                        "in": "header",
+                        "description": "Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowPasswordProtectedFiles",
+                        "in": "header",
+                        "description": "Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowMacros",
+                        "in": "header",
+                        "description": "Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowXmlExternalEntities",
+                        "in": "header",
+                        "description": "Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowInsecureDeserialization",
+                        "in": "header",
+                        "description": "Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowHtml",
+                        "in": "header",
+                        "description": "Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowUnsafeArchives",
+                        "in": "header",
+                        "description": "Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowOleEmbeddedObject",
+                        "in": "header",
+                        "description": "Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowUnwantedAction",
+                        "in": "header",
+                        "description": "Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "options",
+                        "in": "header",
+                        "description": "Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "restrictFileTypes",
+                        "in": "header",
+                        "description": "Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Advanced scan result for the Azure Blob, including threat rule findings and content information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageAdvancedVirusScanResult"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageAdvancedVirusScanResult"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageAdvancedVirusScanResult"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageAdvancedVirusScanResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Apikey": []
+                    }
+                ]
+            }
+        },
+        "/cloud-storage/azure-blob/single/advanced/batch-job": {
+            "post": {
+                "tags": [
+                    "ScanCloudStorage"
+                ],
+                "summary": "Advanced Scan an Azure Blob for viruses via a batch job",
+                "description": "Via a batch job, advanced Scan the contents of a single Azure Blob and its content for viruses and threats, great for larger/longer processing jobs.  Requires Managed Instance or Private Cloud.  Returns a job ID which you can then use the Get Job Status API to get the status and output of the job.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.",
+                "operationId": "scanAzureBlobAdvancedBatchJob",
+                "parameters": [
+                    {
+                        "name": "connectionString",
+                        "in": "header",
+                        "description": "Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "containerName",
+                        "in": "header",
+                        "description": "Name of the Blob container within the Azure Blob Storage account",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "blobPath",
+                        "in": "header",
+                        "description": "Path to the blob within the container, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "allowExecutables",
+                        "in": "header",
+                        "description": "Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowInvalidFiles",
+                        "in": "header",
+                        "description": "Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowScripts",
+                        "in": "header",
+                        "description": "Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowPasswordProtectedFiles",
+                        "in": "header",
+                        "description": "Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowMacros",
+                        "in": "header",
+                        "description": "Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowXmlExternalEntities",
+                        "in": "header",
+                        "description": "Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowInsecureDeserialization",
+                        "in": "header",
+                        "description": "Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowHtml",
+                        "in": "header",
+                        "description": "Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowUnsafeArchives",
+                        "in": "header",
+                        "description": "Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowOleEmbeddedObject",
+                        "in": "header",
+                        "description": "Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowUnwantedAction",
+                        "in": "header",
+                        "description": "Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "options",
+                        "in": "header",
+                        "description": "Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "restrictFileTypes",
+                        "in": "header",
+                        "description": "Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Batch job created for the Azure Blob scan, with the job ID to use when checking its status",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanCloudStorageBatchJobCreateResult"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanCloudStorageBatchJobCreateResult"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanCloudStorageBatchJobCreateResult"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanCloudStorageBatchJobCreateResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Apikey": []
+                    }
+                ]
+            }
+        },
+        "/cloud-storage/aws-s3/single/advanced/batch-job": {
+            "post": {
+                "tags": [
+                    "ScanCloudStorage"
+                ],
+                "summary": "Advanced Scan an AWS S3 file for viruses via a batch job",
+                "description": "Via a batch job, advanced Scan the contents of a single AWS S3 file and its content for viruses and threats, great for larger/longer processing jobs.  Requires Managed Instance or Private Cloud.  Returns a job ID which you can then use the Get Job Status API to get the status and output of the job.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.",
+                "operationId": "scanAwsS3FileAdvancedBatchJob",
+                "responses": {
+                    "200": {
+                        "description": "Batch job created for the AWS S3 file scan, with the job ID to use when checking its status",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanCloudStorageBatchJobCreateResult"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanCloudStorageBatchJobCreateResult"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanCloudStorageBatchJobCreateResult"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanCloudStorageBatchJobCreateResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Apikey": []
+                    }
+                ]
+            }
+        },
+        "/cloud-storage/gcp-storage/single/advanced/batch-job": {
+            "post": {
+                "tags": [
+                    "ScanCloudStorage"
+                ],
+                "summary": "Advanced Scan an Google Cloud Platform (GCP) Storage file for viruses via a batch job",
+                "description": "Via a batch job, advanced Scan the contents of a single Google Cloud Platform (GCP) Storage file and its content for viruses and threats, great for larger/longer processing jobs.  Requires Managed Instance or Private Cloud.  Returns a job ID which you can then use the Get Job Status API to get the status and output of the job.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.",
+                "operationId": "scanGcpStorageFileAdvancedBatchJob",
+                "responses": {
+                    "200": {
+                        "description": "Batch job created for the GCP Storage file scan, with the job ID to use when checking its status",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanCloudStorageBatchJobCreateResult"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanCloudStorageBatchJobCreateResult"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanCloudStorageBatchJobCreateResult"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanCloudStorageBatchJobCreateResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Apikey": []
+                    }
+                ]
+            }
+        },
+        "/cloud-storage/aws-s3/single": {
+            "post": {
+                "tags": [
+                    "ScanCloudStorage"
+                ],
+                "summary": "Scan an AWS S3 file for viruses",
+                "description": "Scan the contents of a single AWS S3 file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.",
+                "operationId": "scanAwsS3File",
+                "parameters": [
+                    {
+                        "name": "accessKey",
+                        "in": "header",
+                        "description": "AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "secretKey",
+                        "in": "header",
+                        "description": "AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "bucketRegion",
+                        "in": "header",
+                        "description": "Name of the region of the S3 bucket, such as 'US-East-1'",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "bucketName",
+                        "in": "header",
+                        "description": "Name of the S3 bucket",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "keyName",
+                        "in": "header",
+                        "description": "Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "roleArn",
+                        "in": "header",
+                        "description": "Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Virus scan result for the AWS S3 file, including whether it is clean and any viruses found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageVirusScanResult"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageVirusScanResult"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageVirusScanResult"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageVirusScanResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Apikey": []
+                    }
+                ]
+            }
+        },
+        "/cloud-storage/aws-s3/single/advanced": {
+            "post": {
+                "tags": [
+                    "ScanCloudStorage"
+                ],
+                "summary": "Advanced Scan an AWS S3 file for viruses",
+                "description": "Advanced Scan the contents of a single AWS S3 file and its content for viruses and threats. Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.",
+                "operationId": "scanAwsS3FileAdvanced",
+                "parameters": [
+                    {
+                        "name": "accessKey",
+                        "in": "header",
+                        "description": "AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "secretKey",
+                        "in": "header",
+                        "description": "AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "bucketRegion",
+                        "in": "header",
+                        "description": "Name of the region of the S3 bucket, such as 'US-East-1'",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "bucketName",
+                        "in": "header",
+                        "description": "Name of the S3 bucket",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "keyName",
+                        "in": "header",
+                        "description": "Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "roleArn",
+                        "in": "header",
+                        "description": "Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "allowExecutables",
+                        "in": "header",
+                        "description": "Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowInvalidFiles",
+                        "in": "header",
+                        "description": "Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowScripts",
+                        "in": "header",
+                        "description": "Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowPasswordProtectedFiles",
+                        "in": "header",
+                        "description": "Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowMacros",
+                        "in": "header",
+                        "description": "Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowXmlExternalEntities",
+                        "in": "header",
+                        "description": "Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowInsecureDeserialization",
+                        "in": "header",
+                        "description": "Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowHtml",
+                        "in": "header",
+                        "description": "Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowUnsafeArchives",
+                        "in": "header",
+                        "description": "Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowOleEmbeddedObject",
+                        "in": "header",
+                        "description": "Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowUnwantedAction",
+                        "in": "header",
+                        "description": "Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "options",
+                        "in": "header",
+                        "description": "Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "restrictFileTypes",
+                        "in": "header",
+                        "description": "Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Advanced scan result for the AWS S3 file, including threat rule findings and content information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageAdvancedVirusScanResult"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageAdvancedVirusScanResult"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageAdvancedVirusScanResult"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageAdvancedVirusScanResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Apikey": []
+                    }
+                ]
+            }
+        },
+        "/cloud-storage/sharepoint-online/site/single": {
+            "post": {
+                "tags": [
+                    "ScanCloudStorage"
+                ],
+                "summary": "Virus Scan a file in a SharePoint Online Site Drive",
+                "description": "Virus Scan the contents of a single SharePoint Online Site Drive file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time. To get the Client ID and Client Secret, follow these steps: (1) Navigate to the Azure Portal and click on Azure Active Directory, (2) click on App Registrations on the left hand side, (3) click on Register Application, (4) Name the application CloudmersiveAntiVirus and click on Register, (5) Get the client ID by clicking on Overview and copying the value labeled Application (client) ID, (6) click on Certificates and Secrets, (7) click on New client secret, choose a longer expiration and give the secret a name, (8) copy the secret value to the clipboard and save it securely, this is your Client Secret, (9) Now we need to grant permissions to SharePOint; click on API Permissions on the left hand side, (10) click on Add a permission and choose Microsoft Graph, (11) click on Application Permissions, (12) search for Sites.FullControl.All, (13) Click on Add Permissions, (14) now navigate back to Azure Active Directory and click on Enterprise Applications, click on CloudmersiveAntiVirus and click on Permissions, and (15) click on Grant Admin Consent.",
+                "operationId": "scanSharePointOnlineFile",
+                "parameters": [
+                    {
+                        "name": "clientID",
+                        "in": "header",
+                        "description": "Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "clientSecret",
+                        "in": "header",
+                        "description": "Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sharepointDomainName",
+                        "in": "header",
+                        "description": "SharePoint Online domain name, such as mydomain.sharepoint.com",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "siteID",
+                        "in": "header",
+                        "description": "Site ID (GUID) of the SharePoint site you wish to retrieve the file from",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "tenantID",
+                        "in": "header",
+                        "description": "Optional; Tenant ID of your Azure Active Directory",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filePath",
+                        "in": "header",
+                        "description": "Path to the file within the drive, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "itemID",
+                        "in": "header",
+                        "description": "SharePoint itemID, such as a DriveItem Id",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Virus scan result for the SharePoint Online file, including whether it is clean and any viruses found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageVirusScanResult"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageVirusScanResult"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageVirusScanResult"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageVirusScanResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Apikey": []
+                    }
+                ]
+            }
+        },
+        "/cloud-storage/sharepoint-online/site/advanced": {
+            "post": {
+                "tags": [
+                    "ScanCloudStorage"
+                ],
+                "summary": "Advanced Virus Scan a file in a SharePoint Online Site Drive",
+                "description": "Advanced Virus Scan the contents of a single SharePoint Online Site Drive file and its content for viruses and threats.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time. To get the Client ID and Client Secret, follow these steps: (1) Navigate to the Azure Portal and click on Azure Active Directory, (2) click on App Registrations on the left hand side, (3) click on Register Application, (4) Name the application CloudmersiveAntiVirus and click on Register, (5) Get the client ID by clicking on Overview and copying the value labeled Application (client) ID, (6) click on Certificates and Secrets, (7) click on New client secret, choose a longer expiration and give the secret a name, (8) copy the secret value to the clipboard and save it securely, this is your Client Secret, (9) Now we need to grant permissions to SharePOint; click on API Permissions on the left hand side, (10) click on Add a permission and choose Microsoft Graph, (11) click on Application Permissions, (12) search for Sites.FullControl.All, (13) Click on Add Permissions, (14) now navigate back to Azure Active Directory and click on Enterprise Applications, click on CloudmersiveAntiVirus and click on Permissions, and (15) click on Grant Admin Consent.",
+                "operationId": "scanSharePointOnlineFileAdvanced",
+                "parameters": [
+                    {
+                        "name": "clientID",
+                        "in": "header",
+                        "description": "Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "clientSecret",
+                        "in": "header",
+                        "description": "Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sharepointDomainName",
+                        "in": "header",
+                        "description": "SharePoint Online domain name, such as mydomain.sharepoint.com",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "siteID",
+                        "in": "header",
+                        "description": "Site ID (GUID) of the SharePoint site you wish to retrieve the file from",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "tenantID",
+                        "in": "header",
+                        "description": "Optional; Tenant ID of your Azure Active Directory",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filePath",
+                        "in": "header",
+                        "description": "Path to the file within the drive, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "itemID",
+                        "in": "header",
+                        "description": "SharePoint itemID, such as a DriveItem Id",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "allowExecutables",
+                        "in": "header",
+                        "description": "Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowInvalidFiles",
+                        "in": "header",
+                        "description": "Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowScripts",
+                        "in": "header",
+                        "description": "Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowPasswordProtectedFiles",
+                        "in": "header",
+                        "description": "Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowMacros",
+                        "in": "header",
+                        "description": "Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowXmlExternalEntities",
+                        "in": "header",
+                        "description": "Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowInsecureDeserialization",
+                        "in": "header",
+                        "description": "Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowHtml",
+                        "in": "header",
+                        "description": "Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowUnsafeArchives",
+                        "in": "header",
+                        "description": "Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowOleEmbeddedObject",
+                        "in": "header",
+                        "description": "Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowUnwantedAction",
+                        "in": "header",
+                        "description": "Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "restrictFileTypes",
+                        "in": "header",
+                        "description": "Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Advanced scan result for the SharePoint Online file, including threat rule findings and content information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageAdvancedVirusScanResult"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageAdvancedVirusScanResult"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageAdvancedVirusScanResult"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageAdvancedVirusScanResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Apikey": []
+                    }
+                ]
+            }
+        },
+        "/cloud-storage/gcp-storage/single": {
+            "post": {
+                "tags": [
+                    "ScanCloudStorage"
+                ],
+                "summary": "Scan an Google Cloud Platform (GCP) Storage file for viruses",
+                "description": "Scan the contents of a single Google Cloud Platform (GCP) Storage file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.",
+                "operationId": "scanGcpStorageFile",
+                "parameters": [
+                    {
+                        "name": "bucketName",
+                        "in": "header",
+                        "description": "Name of the bucket in Google Cloud Storage",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectName",
+                        "in": "header",
+                        "description": "Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScanGcpStorageFileRequest"
+                            }
+                        }
+                    },
+                    "required": true,
+                    "description": "GCP service account JSON credential file used to access the storage bucket"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Virus scan result for the GCP Storage file, including whether it is clean and any viruses found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageVirusScanResult"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageVirusScanResult"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageVirusScanResult"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageVirusScanResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Apikey": []
+                    }
+                ]
+            }
+        },
+        "/cloud-storage/gcp-storage/single/advanced": {
+            "post": {
+                "tags": [
+                    "ScanCloudStorage"
+                ],
+                "summary": "Advanced Scan an Google Cloud Platform (GCP) Storage file for viruses",
+                "description": "Advanced Scan the contents of a single Google Cloud Platform (GCP) Storage file and its content for viruses and threats. Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.",
+                "operationId": "scanGcpStorageFileAdvanced",
+                "parameters": [
+                    {
+                        "name": "bucketName",
+                        "in": "header",
+                        "description": "Name of the bucket in Google Cloud Storage",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectName",
+                        "in": "header",
+                        "description": "Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "allowExecutables",
+                        "in": "header",
+                        "description": "Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowInvalidFiles",
+                        "in": "header",
+                        "description": "Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowScripts",
+                        "in": "header",
+                        "description": "Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowPasswordProtectedFiles",
+                        "in": "header",
+                        "description": "Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowMacros",
+                        "in": "header",
+                        "description": "Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowXmlExternalEntities",
+                        "in": "header",
+                        "description": "Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowInsecureDeserialization",
+                        "in": "header",
+                        "description": "Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended)",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowHtml",
+                        "in": "header",
+                        "description": "Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowUnsafeArchives",
+                        "in": "header",
+                        "description": "Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowOleEmbeddedObject",
+                        "in": "header",
+                        "description": "Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allowUnwantedAction",
+                        "in": "header",
+                        "description": "Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "options",
+                        "in": "header",
+                        "description": "Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "restrictFileTypes",
+                        "in": "header",
+                        "description": "Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled",
+                        "required": false,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScanGcpStorageFileRequest"
+                            }
+                        }
+                    },
+                    "required": true,
+                    "description": "GCP service account JSON credential file; scan options are sent as headers"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Advanced scan result for the GCP Storage file, including threat rule findings and content information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageAdvancedVirusScanResult"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageAdvancedVirusScanResult"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageAdvancedVirusScanResult"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CloudStorageAdvancedVirusScanResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Apikey": []
+                    }
+                ]
+            }
+        },
+        "/cloud-storage/batch-job/status": {
+            "get": {
+                "tags": [
+                    "ScanCloudStorage"
+                ],
+                "summary": "Get the status and result of a Scan Cloud Storage Batch Job",
+                "description": "Returns the result of the Async Job - possible states can be STARTED or COMPLETED.  This API is only available for Cloudmersive Managed Instance and Private Cloud deployments.",
+                "operationId": "getAsyncJobStatus",
+                "parameters": [
+                    {
+                        "name": "AsyncJobID",
+                        "in": "query",
+                        "required": true,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "x-ballerina-name": "asyncJobID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Status of the batch job, with the scan result once the job has completed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanCloudStorageJobStatusResult"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanCloudStorageJobStatusResult"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanCloudStorageJobStatusResult"
+                                }
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScanCloudStorageJobStatusResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Apikey": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "WebsiteScanResult": {
+                "type": "object",
+                "properties": {
+                    "WebsiteHttpResponseCode": {
+                        "type": "integer",
+                        "description": "The remote server URL HTTP reasponse code; useful for debugging issues with scanning; typically if the remote server returns a 200 or 300-series code this means a successful response, while a 400 or 500 series code would represent an error returned from the remote server for the provided URL",
+                        "format": "int32",
+                        "x-ballerina-name": "websiteHttpResponseCode"
+                    },
+                    "FoundViruses": {
+                        "type": "array",
+                        "description": "Array of viruses found, if any",
+                        "items": {
+                            "$ref": "#/components/schemas/VirusFound"
+                        },
+                        "x-ballerina-name": "foundViruses"
+                    },
+                    "CleanResult": {
+                        "type": "boolean",
+                        "description": "True if the scan contained no threats, false otherwise",
+                        "x-ballerina-name": "cleanResult"
+                    },
+                    "WebsiteThreatType": {
+                        "type": "string",
+                        "description": "Type of threat returned; can be None, Malware, ForcedDownload or Phishing",
+                        "enum": [
+                            "None",
+                            "Malware",
+                            "Phishing",
+                            "ForcedDownload",
+                            "UnableToConnect"
+                        ],
+                        "x-ballerina-name": "websiteThreatType"
+                    }
+                },
+                "description": "Result of running a website scan"
+            },
+            "CloudStorageAdvancedVirusScanResult": {
+                "type": "object",
+                "properties": {
+                    "ErrorDetailedDescription": {
+                        "type": "string",
+                        "description": "Detailed error message if the operation was not successful",
+                        "x-ballerina-name": "errorDetailedDescription"
+                    },
+                    "ContainsInvalidFile": {
+                        "type": "boolean",
+                        "description": "True if the scan contained an invalid file (such as a PDF that is not a valid PDF, Word Document that is not a valid Word Document, etc.), which can be a significant risk factor",
+                        "x-ballerina-name": "containsInvalidFile"
+                    },
+                    "ContainsRestrictedFileFormat": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file is of a type that is not allowed based on the optional restrictFileTypes parameter, false otherwise; if restrictFileTypes is not set, this will always be false",
+                        "x-ballerina-name": "containsRestrictedFileFormat"
+                    },
+                    "ContainsScript": {
+                        "type": "boolean",
+                        "description": "True if the scan contained a script (such as a PHP script, Python script, etc.) which can be a significant risk factor",
+                        "x-ballerina-name": "containsScript"
+                    },
+                    "ContainsOleEmbeddedObject": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains an OLE embedded object, which can be a significant risk factor",
+                        "x-ballerina-name": "containsOleEmbeddedObject"
+                    },
+                    "FoundViruses": {
+                        "type": "array",
+                        "description": "Array of viruses found, if any",
+                        "items": {
+                            "$ref": "#/components/schemas/CloudStorageVirusFound"
+                        },
+                        "x-ballerina-name": "foundViruses"
+                    },
+                    "ContentInformation": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/AdditionalAdvancedScanInformation"
+                            }
+                        ],
+                        "x-ballerina-name": "contentInformation"
+                    },
+                    "ContainsMacros": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains embedded Macros of other embedded threats within the document, which can be a significant risk factor",
+                        "x-ballerina-name": "containsMacros"
+                    },
+                    "ContainsXmlExternalEntities": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains embedded XML External Entity threats of other embedded threats within the document, which can be a significant risk factor",
+                        "x-ballerina-name": "containsXmlExternalEntities"
+                    },
+                    "Successful": {
+                        "type": "boolean",
+                        "description": "True if the operation of retrieving the file, and scanning it were successfully completed, false if the file could not be downloaded from cloud storage, or if the file could not be scanned.  Note that successful completion does not mean the file is clean; for the output of the virus scanning operation itself, use the CleanResult and FoundViruses parameters",
+                        "x-ballerina-name": "successful"
+                    },
+                    "CleanResult": {
+                        "type": "boolean",
+                        "description": "True if the scan contained no viruses, false otherwise",
+                        "x-ballerina-name": "cleanResult"
+                    },
+                    "ContainsInsecureDeserialization": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains embedded Insecure Deserialization threats of other embedded threats within the document, which can be a significant risk factor",
+                        "x-ballerina-name": "containsInsecureDeserialization"
+                    },
+                    "ContainsHtml": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains HTML, which can be a significant risk factor",
+                        "x-ballerina-name": "containsHtml"
+                    },
+                    "ContainsExecutable": {
+                        "type": "boolean",
+                        "description": "True if the scan contained an executable (application code), which can be a significant risk factor",
+                        "x-ballerina-name": "containsExecutable"
+                    },
+                    "VerifiedFileFormat": {
+                        "type": "string",
+                        "description": "For file format verification-supported file formats, the contents-verified file format of the file.  Null indicates that the file format is not supported for contents verification.  If a Virus or Malware is found, this field will always be set to Null",
+                        "x-ballerina-name": "verifiedFileFormat"
+                    },
+                    "ContainsUnsafeArchive": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains unsafe archive (e.g. zip) content, such as a Zip Bomb, or other configurations of a zip file that could lead to an unsafe extraction",
+                        "x-ballerina-name": "containsUnsafeArchive"
+                    },
+                    "ContainsPasswordProtectedFile": {
+                        "type": "boolean",
+                        "description": "True if the scan contained a password protected or encrypted file, which can be a significant risk factor",
+                        "x-ballerina-name": "containsPasswordProtectedFile"
+                    },
+                    "FileSize": {
+                        "type": "integer",
+                        "description": "Size in bytes of the file that was retrieved and scanned",
+                        "format": "int64",
+                        "x-ballerina-name": "fileSize"
+                    }
+                },
+                "description": "Result of running an advanced virus scan on cloud storage"
+            },
+            "WebsiteScanRequest": {
+                "type": "object",
+                "properties": {
+                    "Url": {
+                        "type": "string",
+                        "description": "URL of the website to scan; should begin with http:// or https://",
+                        "x-ballerina-name": "url"
+                    }
+                },
+                "description": "Request to scan a website for malicious content"
+            },
+            "VirusScanAdvancedResult": {
+                "type": "object",
+                "properties": {
+                    "ContainsInvalidFile": {
+                        "type": "boolean",
+                        "description": "True if the scan contained an invalid file (such as a PDF that is not a valid PDF, Word Document that is not a valid Word Document, etc.), which can be a significant risk factor",
+                        "x-ballerina-name": "containsInvalidFile"
+                    },
+                    "ContainsRestrictedFileFormat": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file is of a type that is not allowed based on the optional restrictFileTypes parameter, false otherwise; if restrictFileTypes is not set, this will always be false",
+                        "x-ballerina-name": "containsRestrictedFileFormat"
+                    },
+                    "ContainsUnwantedAction": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains an unwanted automatic action, which can be a significant risk factor",
+                        "x-ballerina-name": "containsUnwantedAction"
+                    },
+                    "ContainsScript": {
+                        "type": "boolean",
+                        "description": "True if the scan contained a script (such as a PHP script, Python script, etc.) which can be a significant risk factor",
+                        "x-ballerina-name": "containsScript"
+                    },
+                    "ContainsOleEmbeddedObject": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains an OLE embedded object, which can be a significant risk factor",
+                        "x-ballerina-name": "containsOleEmbeddedObject"
+                    },
+                    "FoundViruses": {
+                        "type": "array",
+                        "description": "Array of viruses found, if any",
+                        "items": {
+                            "$ref": "#/components/schemas/VirusFound"
+                        },
+                        "x-ballerina-name": "foundViruses"
+                    },
+                    "ContentInformation": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/AdditionalAdvancedScanInformation"
+                            }
+                        ],
+                        "x-ballerina-name": "contentInformation"
+                    },
+                    "ContainsMacros": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains embedded Macros of other embedded threats within the document, which can be a significant risk factor",
+                        "x-ballerina-name": "containsMacros"
+                    },
+                    "ContainsXmlExternalEntities": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains embedded XML External Entity threats of other embedded threats within the document, which can be a significant risk factor",
+                        "x-ballerina-name": "containsXmlExternalEntities"
+                    },
+                    "CleanResult": {
+                        "type": "boolean",
+                        "description": "True if the scan contained no viruses, false otherwise",
+                        "x-ballerina-name": "cleanResult"
+                    },
+                    "ContainsInsecureDeserialization": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains embedded Insecure Deserialization threats of other embedded threats within the document, which can be a significant risk factor",
+                        "x-ballerina-name": "containsInsecureDeserialization"
+                    },
+                    "ContainsHtml": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains HTML, which can be a significant risk factor",
+                        "x-ballerina-name": "containsHtml"
+                    },
+                    "ContainsExecutable": {
+                        "type": "boolean",
+                        "description": "True if the scan contained an executable (application code), which can be a significant risk factor",
+                        "x-ballerina-name": "containsExecutable"
+                    },
+                    "VerifiedFileFormat": {
+                        "type": "string",
+                        "description": "For file format verification-supported file formats, the contents-verified file format of the file.  Null indicates that the file format is not supported for contents verification.  If a Virus or Malware is found, this field will always be set to Null",
+                        "x-ballerina-name": "verifiedFileFormat"
+                    },
+                    "ContainsUnsafeArchive": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains unsafe archive (e.g. zip) content, such as a Zip Bomb, or other configurations of a zip file that could lead to an unsafe extraction",
+                        "x-ballerina-name": "containsUnsafeArchive"
+                    },
+                    "ContainsPasswordProtectedFile": {
+                        "type": "boolean",
+                        "description": "True if the scan contained a password protected or encrypted file, which can be a significant risk factor",
+                        "x-ballerina-name": "containsPasswordProtectedFile"
+                    }
+                },
+                "description": "Result of running an advanced virus scan"
+            },
+            "CloudStorageVirusFound": {
+                "type": "object",
+                "properties": {
+                    "FileName": {
+                        "type": "string",
+                        "description": "Name of the file containing the virus",
+                        "x-ballerina-name": "fileName"
+                    },
+                    "VirusName": {
+                        "type": "string",
+                        "description": "Name of the virus that was found",
+                        "x-ballerina-name": "virusName"
+                    }
+                },
+                "description": "Virus positively identified"
+            },
+            "CloudStorageVirusScanResult": {
+                "type": "object",
+                "properties": {
+                    "ErrorDetailedDescription": {
+                        "type": "string",
+                        "description": "Detailed error message if the operation was not successful",
+                        "x-ballerina-name": "errorDetailedDescription"
+                    },
+                    "ContainsInvalidFile": {
+                        "type": "boolean",
+                        "description": "True if the scan contained an invalid file (such as a PDF that is not a valid PDF, Word Document that is not a valid Word Document, etc.), which can be a significant risk factor",
+                        "x-ballerina-name": "containsInvalidFile"
+                    },
+                    "ContainsRestrictedFileFormat": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file is of a type that is not allowed based on the optional restrictFileTypes parameter, false otherwise; if restrictFileTypes is not set, this will always be false",
+                        "x-ballerina-name": "containsRestrictedFileFormat"
+                    },
+                    "FoundViruses": {
+                        "type": "array",
+                        "description": "Array of viruses found, if any",
+                        "items": {
+                            "$ref": "#/components/schemas/CloudStorageVirusFound"
+                        },
+                        "x-ballerina-name": "foundViruses"
+                    },
+                    "ContainsScript": {
+                        "type": "boolean",
+                        "description": "True if the scan contained a script (such as a PHP script, Python script, etc.) which can be a significant risk factor",
+                        "x-ballerina-name": "containsScript"
+                    },
+                    "ContainsOleEmbeddedObject": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains an OLE embedded object, which can be a significant risk factor",
+                        "x-ballerina-name": "containsOleEmbeddedObject"
+                    },
+                    "ContainsMacros": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains embedded Macros of other embedded threats within the document, which can be a significant risk factor",
+                        "x-ballerina-name": "containsMacros"
+                    },
+                    "ContainsXmlExternalEntities": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains embedded XML External Entity threats of other embedded threats within the document, which can be a significant risk factor",
+                        "x-ballerina-name": "containsXmlExternalEntities"
+                    },
+                    "Successful": {
+                        "type": "boolean",
+                        "description": "True if the operation of retrieving the file, and scanning it were successfully completed, false if the file could not be downloaded from cloud storage, or if the file could not be scanned.  Note that successful completion does not mean the file is clean; for the output of the virus scanning operation itself, use the CleanResult and FoundViruses parameters",
+                        "x-ballerina-name": "successful"
+                    },
+                    "CleanResult": {
+                        "type": "boolean",
+                        "description": "True if the scan contained no viruses, false otherwise",
+                        "x-ballerina-name": "cleanResult"
+                    },
+                    "ContainsInsecureDeserialization": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains embedded Insecure Deserialization threats of other embedded threats within the document, which can be a significant risk factor",
+                        "x-ballerina-name": "containsInsecureDeserialization"
+                    },
+                    "ContainsHtml": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains HTML, which can be a significant risk factor",
+                        "x-ballerina-name": "containsHtml"
+                    },
+                    "ContainsContentModerationRejection": {
+                        "type": "boolean",
+                        "description": "Set to true when using NSFW Content Moderation in the Cloudmersive Storage Protect product (disabled by default)",
+                        "x-ballerina-name": "containsContentModerationRejection"
+                    },
+                    "ContainsExecutable": {
+                        "type": "boolean",
+                        "description": "True if the scan contained an executable (application code), which can be a significant risk factor",
+                        "x-ballerina-name": "containsExecutable"
+                    },
+                    "VerifiedFileFormat": {
+                        "type": "string",
+                        "description": "For file format verification-supported file formats, the contents-verified file format of the file.  Null indicates that the file format is not supported for contents verification.  If a Virus or Malware is found, this field will always be set to Null",
+                        "x-ballerina-name": "verifiedFileFormat"
+                    },
+                    "ContainsUnsafeArchive": {
+                        "type": "boolean",
+                        "description": "True if the uploaded file contains unsafe archive (e.g. zip) content, such as a Zip Bomb, or other configurations of a zip file that could lead to an unsafe extraction",
+                        "x-ballerina-name": "containsUnsafeArchive"
+                    },
+                    "ContainsPasswordProtectedFile": {
+                        "type": "boolean",
+                        "description": "True if the scan contained a password protected or encrypted file, which can be a significant risk factor",
+                        "x-ballerina-name": "containsPasswordProtectedFile"
+                    },
+                    "FileSize": {
+                        "type": "integer",
+                        "description": "Size in bytes of the file that was retrieved and scanned",
+                        "format": "int64",
+                        "x-ballerina-name": "fileSize"
+                    }
+                },
+                "description": "Result of running a virus scan on cloud storage"
+            },
+            "VirusFound": {
+                "type": "object",
+                "properties": {
+                    "FileName": {
+                        "type": "string",
+                        "description": "Name of the file containing the virus",
+                        "x-ballerina-name": "fileName"
+                    },
+                    "VirusName": {
+                        "type": "string",
+                        "description": "Name of the virus that was found",
+                        "x-ballerina-name": "virusName"
+                    }
+                },
+                "description": "Virus positively identified"
+            },
+            "ScanGcpStorageFileRequest": {
+                "required": [
+                    "jsonCredentialFile"
+                ],
+                "type": "object",
+                "properties": {
+                    "jsonCredentialFile": {
+                        "type": "string",
+                        "description": "Service Account credential for Google Cloud stored in a JSON file",
+                        "format": "binary"
+                    }
+                }
+            },
+            "ScanCloudStorageJobStatusResult": {
+                "type": "object",
+                "properties": {
+                    "JobDuration": {
+                        "type": "string",
+                        "description": "Duration of a completed job",
+                        "x-ballerina-name": "jobDuration"
+                    },
+                    "AsyncJobID": {
+                        "type": "string",
+                        "description": "Job ID of the async batch job",
+                        "x-ballerina-name": "asyncJobID"
+                    },
+                    "ErrorMessage": {
+                        "type": "string",
+                        "description": "Error message (if any)",
+                        "x-ballerina-name": "errorMessage"
+                    },
+                    "Successful": {
+                        "type": "boolean",
+                        "description": "Tru eif the operation to check the status of the job was successful, false otherwise",
+                        "x-ballerina-name": "successful"
+                    },
+                    "AsyncJobStatus": {
+                        "type": "string",
+                        "description": "Returns the job status of the Async Job, if applicable.  Possible states are STARTED and COMPLETED",
+                        "x-ballerina-name": "asyncJobStatus"
+                    },
+                    "Result": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/CloudStorageAdvancedVirusScanResult"
+                            }
+                        ],
+                        "x-ballerina-name": "result"
+                    }
+                },
+                "description": "Status of the scan cloud storage job"
+            },
+            "ScanCloudStorageBatchJobCreateResult": {
+                "type": "object",
+                "properties": {
+                    "AsyncJobID": {
+                        "type": "string",
+                        "description": "When creating a job, an Async Job ID is returned.  Use the GetAsyncJobStatus API to check on the status of this job using the AsyncJobID and get the result when it finishes",
+                        "x-ballerina-name": "asyncJobID"
+                    },
+                    "Successful": {
+                        "type": "boolean",
+                        "description": "True if successful, false otherwise",
+                        "x-ballerina-name": "successful"
+                    }
+                },
+                "description": "Result of performing a convert documentbatch job operation"
+            },
+            "ScanFileRequest": {
+                "required": [
+                    "inputFile"
+                ],
+                "type": "object",
+                "properties": {
+                    "inputFile": {
+                        "type": "string",
+                        "description": "Input file to perform the operation on",
+                        "format": "binary"
+                    }
+                }
+            },
+            "VirusScanResult": {
+                "type": "object",
+                "properties": {
+                    "FoundViruses": {
+                        "type": "array",
+                        "description": "Array of viruses found, if any",
+                        "items": {
+                            "$ref": "#/components/schemas/VirusFound"
+                        },
+                        "x-ballerina-name": "foundViruses"
+                    },
+                    "CleanResult": {
+                        "type": "boolean",
+                        "description": "True if the scan contained no viruses, false otherwise",
+                        "x-ballerina-name": "cleanResult"
+                    }
+                },
+                "description": "Result of running a virus scan"
+            },
+            "AdditionalAdvancedScanInformation": {
+                "type": "object",
+                "properties": {
+                    "Hash_SHA1": {
+                        "type": "string",
+                        "description": "SHA1 hash of input file",
+                        "x-ballerina-name": "hashSHA1"
+                    },
+                    "ContainsJSON": {
+                        "type": "boolean",
+                        "description": "True if the input file contains JSON data, false otherwise; this is not a threat signal",
+                        "x-ballerina-name": "containsJSON"
+                    },
+                    "IsAuthenticodeSigned": {
+                        "type": "boolean",
+                        "description": "True if there is a valid Authenticode signature, False otherwise",
+                        "x-ballerina-name": "isAuthenticodeSigned"
+                    },
+                    "RelevantSubfileName": {
+                        "type": "string",
+                        "description": "Relevant subfile name in an archive format for identified threats, if any",
+                        "x-ballerina-name": "relevantSubfileName"
+                    },
+                    "ContainsImage": {
+                        "type": "boolean",
+                        "description": "True if the input file contains an image",
+                        "x-ballerina-name": "containsImage"
+                    },
+                    "ContainsXML": {
+                        "type": "boolean",
+                        "description": "True if the input file contains XML data, false otherwise; this is not a threat signal",
+                        "x-ballerina-name": "containsXML"
+                    },
+                    "RelevantSubfileHash_SHA1": {
+                        "type": "string",
+                        "description": "SHA1 hash of relevant subfile name in an archive format for identified threats, if any",
+                        "x-ballerina-name": "relevantSubfileHashSHA1"
+                    }
+                },
+                "description": "Additional non-threat content verification information"
+            }
+        },
+        "securitySchemes": {
+            "Apikey": {
+                "type": "apiKey",
+                "description": "API Key Authentication",
+                "name": "Apikey",
+                "in": "header",
+                "x-ballerina-name": "apikey"
+            }
+        }
+    },
+    "x-original-swagger-version": "2.0"
+}
